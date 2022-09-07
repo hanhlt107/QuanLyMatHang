@@ -26,13 +26,7 @@ public class DangNhapJFrame extends javax.swing.JFrame {
         accountService = new AccountService();
 
     }
-
-    private boolean checkPass(String text) {
-        Pattern p = Pattern.compile("^.*(?=.{6,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z]).*$");
-        Matcher m = p.matcher(text);
-        return m.matches();
-    }
-
+  
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -166,9 +160,6 @@ public class DangNhapJFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Moi ban nhap đầy đủ thông tin");
             return;
 
-        } else if (!checkPass(pass)) {
-            JOptionPane.showMessageDialog(this, "Password chứa số, chữ hoa,chữ thường");
-            return;
         } else if (role == 1) {
             QuanLyJFrame ql = new QuanLyJFrame();
             JOptionPane.showMessageDialog(this, "Thanh cong");
