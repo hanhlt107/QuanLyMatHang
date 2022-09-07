@@ -113,6 +113,7 @@ public class XuatNhapJFrame extends javax.swing.JFrame {
         Medication medication = medicationService.getAllByMa(maSP);
         LocalDate localDate = LocalDate.now();
         Date ngay = null;
+       Date ngayHienTai = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         if (maSP.length() == 0 || maPhieu.length() == 0 || soLuong.length() == 0 || ngayTao.length() == 0 || loaiPhieu == null) {
             JOptionPane.showMessageDialog(this, "Moi ban nhap day du thong tin");

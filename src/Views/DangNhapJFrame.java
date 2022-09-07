@@ -5,6 +5,8 @@
 package Views;
 
 import Service.AccountService;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,7 +17,6 @@ public class DangNhapJFrame extends javax.swing.JFrame {
 
     private AccountService accountService;
     private int dem = 1;
-    
 
     /**
      * Creates new form DangNhapJFrame
@@ -24,6 +25,12 @@ public class DangNhapJFrame extends javax.swing.JFrame {
         initComponents();
         accountService = new AccountService();
 
+    }
+
+    private boolean checkPass(String text) {
+        Pattern p = Pattern.compile("^.*(?=.{6,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z]).*$");
+        Matcher m = p.matcher(text);
+        return m.matches();
     }
 
     /**
@@ -42,9 +49,9 @@ public class DangNhapJFrame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtUserName = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtPass = new javax.swing.JTextField();
         btnDangNhap = new javax.swing.JButton();
         btnThoat = new javax.swing.JButton();
+        txtPass = new javax.swing.JPasswordField();
 
         jTextField1.setText("jTextField1");
 
@@ -77,6 +84,13 @@ public class DangNhapJFrame extends javax.swing.JFrame {
             }
         });
 
+        txtPass.setText("jPasswordField1");
+        txtPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPassActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -92,10 +106,10 @@ public class DangNhapJFrame extends javax.swing.JFrame {
                             .addComponent(jLabel1)
                             .addGap(18, 18, 18)
                             .addComponent(txtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(btnDangNhap)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGap(94, 94, 94)
                             .addComponent(btnThoat))
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabel3)
@@ -115,7 +129,7 @@ public class DangNhapJFrame extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtPass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDangNhap)
@@ -152,6 +166,9 @@ public class DangNhapJFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Moi ban nhap đầy đủ thông tin");
             return;
 
+        } else if (!checkPass(pass)) {
+            JOptionPane.showMessageDialog(this, "Password chứa số, chữ hoa,chữ thường");
+            return;
         } else if (role == 1) {
             QuanLyJFrame ql = new QuanLyJFrame();
             JOptionPane.showMessageDialog(this, "Thanh cong");
@@ -178,6 +195,10 @@ public class DangNhapJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_btnThoatActionPerformed
+
+    private void txtPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPassActionPerformed
 
     /**
      * @param args the command line arguments
@@ -231,7 +252,7 @@ public class DangNhapJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField txtPass;
+    private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUserName;
     // End of variables declaration//GEN-END:variables
 }
