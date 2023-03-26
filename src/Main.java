@@ -25,6 +25,7 @@ public class Main {
         int thang = c.get(Calendar.MONTH) + 1;
         int nam = c.get(Calendar.YEAR);
         int ngay = c.get(Calendar.DAY_OF_MONTH);
+       Date ngayHienTai = new Date();
 
         LocalDate localDate = LocalDate.now();
 

@@ -41,6 +41,9 @@ public class MedicationService {
     public Integer getID(String ma){
         return medicationRepository.getID(ma);
     }
+    public Integer getSoLuong(String ma){
+        return medicationRepository.getSoLuong(ma);
+    }
     public Integer addQuantity(Integer idThuoc, Integer soLuong){
         return medicationRepository.addQuantity(idThuoc, soLuong);
     }

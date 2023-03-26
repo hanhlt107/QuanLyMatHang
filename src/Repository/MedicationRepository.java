@@ -160,6 +160,26 @@ public class MedicationRepository {
         }
         return id;
     }
+    public Integer getSoLuong(String ma) {
+        Integer soLuong = -1;
+        try {
+            Connection connection = DBContext.getConnection();
+            String query = "select quantity from medication where medication_code = ?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, ma);
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            if (rs.next()) {
+                soLuong = rs.getInt("quantity");
+            }
+            rs.close();
+            ps.close();
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return soLuong;
+    }
 
     public Medication getAllByMa(String ma) {
 

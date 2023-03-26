@@ -113,7 +113,7 @@ public class XuatNhapJFrame extends javax.swing.JFrame {
         Medication medication = medicationService.getAllByMa(maSP);
         LocalDate localDate = LocalDate.now();
         Date ngay = null;
-       Date ngayHienTai = new Date();
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         if (maSP.length() == 0 || maPhieu.length() == 0 || soLuong.length() == 0 || ngayTao.length() == 0 || loaiPhieu == null) {
             JOptionPane.showMessageDialog(this, "Moi ban nhap day du thong tin");
@@ -421,6 +421,8 @@ public class XuatNhapJFrame extends javax.swing.JFrame {
         String soLuong = txtSoLuong.getText().trim();
         Integer loaiPhieu = rdoNhap.isSelected() ? 1 : 0;
         int ketQua = inventoryLogService.insert(inventoryLog);
+        int so = Integer.parseInt(soLuong);
+        int soLuongTon = medicationService.getSoLuong(maSP);
 //        int idThuoc = inventoryLogService.getIdThuoc(txtMaPhieu.getText().trim());
 //        int dem = inventoryLogService.kiemTraID(idThuoc, txtMaPhieu.getText().trim());
 //        InventoryLog nx = inventoryLogService.getAllByID(idThuoc, txtMaPhieu.getText().trim());
@@ -441,12 +443,17 @@ public class XuatNhapJFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Id da ton tai");
             return;
         } else if (ketQua > 0) {
-            JOptionPane.showMessageDialog(this, "Thanh cong");
             if (loaiPhieu == 1) {
                 updateQuantity = medicationService.addQuantity(idSP, Integer.parseInt(soLuong));
             } else {
-                updateQuantity = medicationService.minusQuantity(idSP, Integer.parseInt(soLuong));
+                if (so > soLuongTon) {
+                    JOptionPane.showMessageDialog(this, "So luong xuất phai < so luong ton");
+                    return;
+                } else {
+                    updateQuantity = medicationService.minusQuantity(idSP, Integer.parseInt(soLuong));
+                }
             }
+            JOptionPane.showMessageDialog(this, "Thanh cong");
         } else {
             JOptionPane.showMessageDialog(this, "That bai");
         }
@@ -473,6 +480,8 @@ public class XuatNhapJFrame extends javax.swing.JFrame {
         String soLuong = txtSoLuong.getText().trim();
         Integer loaiPhieu = rdoNhap.isSelected() ? 1 : 0;
         int ketQua = inventoryLogService.update(idSP, maPhieu, inventoryLog);
+        int so = Integer.parseInt(soLuong);
+        int soLuongTon = medicationService.getSoLuong(maSP);
 //        int idThuoc = inventoryLogService.getIdThuoc(txtMaPhieu.getText().trim());
 //        int dem = inventoryLogService.kiemTraID(idThuoc, txtMaPhieu.getText().trim());
 //        if (dem == 0) {
@@ -483,12 +492,18 @@ public class XuatNhapJFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Id ko ton tai");
             return;
         } else if (ketQua > 0) {
-            JOptionPane.showMessageDialog(this, "Thanh cong");
             if (loaiPhieu == 1) {
                 updateQuantity = medicationService.addQuantity(idSP, Integer.parseInt(soLuong));
             } else {
-                updateQuantity = medicationService.minusQuantity(idSP, Integer.parseInt(soLuong));
+                if (so > soLuongTon) {
+                    JOptionPane.showMessageDialog(this, "So luong xuất phai < so luong ton");
+                    return;
+                } else {
+                    updateQuantity = medicationService.minusQuantity(idSP, Integer.parseInt(soLuong));
+                }
             }
+            JOptionPane.showMessageDialog(this, "Thanh cong");
+
         } else {
             JOptionPane.showMessageDialog(this, "That bai");
         }

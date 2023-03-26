@@ -34,6 +34,7 @@ public class QuanLyJFrame extends javax.swing.JFrame {
         loadTable(medicationService.getAll());
         loadComboBox();
         clearForm();
+        txtMaSP.setEnabled(false);
     }
 
     private void loadTable(ArrayList<Medication> lstMedication) {
@@ -80,6 +81,13 @@ public class QuanLyJFrame extends javax.swing.JFrame {
         Matcher m = p.matcher(text);
         return m.matches();
     }
+
+    private boolean checkSo0(String text) {
+        Pattern p = Pattern.compile("0");
+        Matcher m = p.matcher(text);
+        return m.matches();
+    }
+
     private boolean checkMa(String text) {
         Pattern p = Pattern.compile("^M\\d+$");
         Matcher m = p.matcher(text);
@@ -101,8 +109,7 @@ public class QuanLyJFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Mã thuoc bắt đầu 'M' + số");
             return null;
         }
-
-        if (!checkSo(soLuong) || !checkSo(gia) || Integer.parseInt(gia) == 0 || Integer.parseInt(soLuong) == 0) {
+        if (!checkSo(soLuong) || !checkSo(gia) || checkSo0(soLuong) || checkSo0(gia)) {
             JOptionPane.showMessageDialog(this, "So luong/Gia phai la so nguyen ko am");
             return null;
         }
@@ -472,13 +479,9 @@ public class QuanLyJFrame extends javax.swing.JFrame {
 
     private void btnTimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimActionPerformed
         // TODO add your handling code here:
-        String tenSP = txtTenSP.getText().trim();
+        String tenSP = JOptionPane.showInputDialog(this, "Mời bạn nhập tên thuốc");
         ArrayList<Medication> lstMedication = medicationService.getAll();
-        if (tenSP.length() == 0) {
-            JOptionPane.showMessageDialog(this, "Mơi ban nhập vào tên thuốc");
-            return;
-        } else {
-
+        if (!tenSP.isEmpty()) {
             ArrayList<Medication> lst = medicationService.getAllByName(tenSP);
             for (int i = 0; i < lstMedication.size(); i++) {
                 Medication medication = lstMedication.get(i);
@@ -488,6 +491,8 @@ public class QuanLyJFrame extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(this, "Thanh cong");
                         loadTable(lst);
                         return;
+                    } else {
+
                     }
                 }
 
